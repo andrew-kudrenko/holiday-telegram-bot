@@ -59,8 +59,8 @@ bot.hears(/\/date \d+/, ctx => {
   getHolidayList(+day, +month, ctx)
 })
 
-bot.hears(/\d+/g, ctx => {
-  const [day, month] = ctx.match
+bot.hears(/\d+\s+\d+/, ctx => {
+  const [day, month] = ctx.match[0].split(' ')
 
   getHolidayList(+day, +month, ctx)
 })
