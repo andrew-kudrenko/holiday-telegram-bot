@@ -14,9 +14,9 @@ module.exports = (month, day, ctx) => {
 
     const record = JSON.parse(data).find(r => r.month === month && r.day === day)
     if (record) {
-      ctx.reply(`Праздники ${day} ${monthOrder[month - 1]}\n\n${record.holidays.join('\n')}`)
+      ctx.reply(`Праздники ${day} ${monthOrder[month - 1]}\n\n\t${record.holidays.join('\n\t•')}`)
     } else {
-      ctx.reply('Error reading data...')
+      ctx.reply('Ошибка...')
     }
   })
 }
