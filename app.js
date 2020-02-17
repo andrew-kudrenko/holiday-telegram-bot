@@ -40,27 +40,27 @@ bot.command('tomorrow', ctx => {
   getHolidayList(+month + 1, day, ctx)
 })
 
-bot.hears(/\/date \d+ .+/, ctx => {
+bot.hears(/\/date \d+ \w+/, ctx => {
   const [, day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
   getHolidayList(+month + 1, +day, ctx)
 })
 
-bot.hears(/\d .+/, ctx => {
+bot.hears(/\d \w+/, ctx => {
   const [day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
   getHolidayList(+month + 1, +day, ctx)
 })
 
 bot.hears(/\/date \d+/, ctx => {
-  const [, day, month] = ctx.match
+  const [day, month] = ctx.match
 
   getHolidayList(+day, +month, ctx)
 })
 
 bot.hears(/\d+/, ctx => {
-  const [day, month] = ctx.match.split(' ')
+  const [day, month] = ctx.match
 
   getHolidayList(+day, +month, ctx)
 })
