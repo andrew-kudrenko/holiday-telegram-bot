@@ -22,7 +22,7 @@ bot.start(ctx => {
   ctx.reply(greetingMsg)
 })
 
-bot.command('/today', ctx => {
+bot.command('today', ctx => {
   const date = new Date()
   const month = date.getMonth()
   const day = date.getDate()
@@ -31,7 +31,7 @@ bot.command('/today', ctx => {
 })
 
 
-bot.command('/tomorrow', ctx => {
+bot.command('tomorrow', ctx => {
   const date = new Date()
   const month = date.getMonth()
   const day = date.getDate() + 1
@@ -41,6 +41,7 @@ bot.command('/tomorrow', ctx => {
 
 bot.hears(/\/date \d+ .+/, ctx => {
   const [, day, monthName] = ctx.match[0].split(' ')
+  console.log('Matching: ', day, monthName)
 
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
@@ -59,4 +60,5 @@ bot.hears(/\/date \d+ \d+/, ctx => {
   getHolidayList(+day, +month, ctx)
 })
 
+bot.startPolling()
 bot.launch()
