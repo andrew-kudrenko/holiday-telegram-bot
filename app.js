@@ -35,7 +35,7 @@ bot.command('/tomorrow', ctx => {
 })
 
 bot.hears(/\/date \d+ .+/, ctx => {
-  const [, day, monthName] = match.split(' ')
+  const [, day, monthName] = ctx.message.split(' ')
 
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
