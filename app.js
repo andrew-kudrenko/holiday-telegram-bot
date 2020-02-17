@@ -27,7 +27,7 @@ bot.command('today', ctx => {
   const month = date.getMonth()
   const day = date.getDate()
 
-  getHolidayList(month + 1, day, ctx)
+  getHolidayList(+month + 1, day, ctx)
 })
 
 
@@ -36,20 +36,20 @@ bot.command('tomorrow', ctx => {
   const month = date.getMonth()
   const day = date.getDate() + 1
 
-  getHolidayList(month + 1, day, ctx)
+  getHolidayList(+month + 1, day, ctx)
 })
 
 bot.hears(/\/date \d+ .+/, ctx => {
   const [, day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
-  getHolidayList(month + 1, +day, ctx)
+  getHolidayList(+month + 1, +day, ctx)
 })
 
 bot.hears(/\d .+/, ctx => {
   const [day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
-  getHolidayList(month + 1, +day, ctx)
+  getHolidayList(+month + 1, +day, ctx)
 })
 
 bot.hears(/\/date \d+ \d+/, ctx => {
