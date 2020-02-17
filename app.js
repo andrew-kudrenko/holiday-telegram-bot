@@ -1,72 +1,64 @@
-const TelegramBot = require('node-telegram-bot-api')
+const Telegraf = require('telegraf')
+
 const getHolidayList = require('./utils/get-holiday-list')
+
 require('dotenv').config()
 
-const http = require('http')
-
-const port = process.env.PORT || 3000
-const token = process.env.TOKEN
-const bot = new TelegramBot(token, { polling: true , request: { proxy: 'http://181.101.41.38:1080/' }})
+const port = process.env.PORT || 5000
+const bot = new Telegraf(process.env.TOKEN)
 
 const monthOrder = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
   'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'
 ]
 
-bot.onText(/\/start/, msg => {
-  const chatId = msg.chat.id
+bot.start(ctx => {
   const greetingMsg = 'Привет! Благодаря мне ты всегда будешь в курсе всех прздничных событий =)'
-
-  bot.sendMessage(chatId, greetingMsg)
+  ctx.reply(greetingMsg)
 })
 
-bot.onText(/\/today/, (msg, match) => {
-  const chatId = msg.chat.id
-
+bot.command(/\/today/, ctx => {
   const date = new Date()
   const month = date.getMonth()
   const day = date.getDate()
 
-  getHolidayList(month + 1, day, chatId)
+  getHolidayList(month + 1, day, ctx)
 })
 
-bot.onText(/\/tomorrow/, msg => {
-  const chatId = msg.chat.id
 
+bot.command(/\/tomorrow/, ctx => {
   const date = new Date()
   const month = date.getMonth()
   const day = date.getDate() + 1
-
-  getHolidayList(month + 1, day, chatId)
+  
+  getHolidayList(month + 1, day, ctx)
 })
 
-bot.onText(/\/date \d+ .+/, (msg, match) => {
-  const chatId = msg.chat.id
-  const [, day, monthName] = match[0].split(' ')
+bot.startPolling()
 
-  const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
+// bot.command(/\/date \d+ .+/, ctx => {
+  //   const [, day, monthName] = match.split(' ')
+  
+//   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
-  getHolidayList(month + 1, Number.parseInt(day), chatId)
-})
+//   getHolidayList(month + 1, +day, ctx)
+// })
 
-bot.on('message', msg => {
-  const chatId = msg.chat.id
-  const match = /\d .+/.match(msg)
-  if (match) {
-    const [day, monthName] = match.split(' ')
-    const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
-    getHolidayList(month + 1, Number.parseInt(day), chatId)
-  } else {
-    bot.sendMessage('Неизвестная команда')
-  }
-})
-
-bot.onText(/\/date \d+ \d+/, (msg, match) => {
-  const chatId = msg.chat.id
-
-  const [, day, month] = match[0].split(' ')
-
-  getHolidayList(day, month, chatId)
-})
-
-http.createServer().listen(port)
+// bot.on('message', ctx => {
+  //   const match = /\d .+/.match(ctx.message)
+//   if (match) {
+  //     const [day, monthName] = match.split(' ')
+//     const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
+//     getHolidayList(month + 1, +day, ctx)
+//   } else {
+  //     ctx.reply('Неизвестная команда')
+  //   }
+  // })
+  
+  // bot.command(/\/date \d+ \d+/, ctx => {
+    //   const chatId = msg.chat.id
+    
+    //   const [, day, month] = match[0].split(' ')
+    
+    //   getHolidayList(+day, +month, chatId)
+    // })
