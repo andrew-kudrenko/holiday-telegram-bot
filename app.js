@@ -1,3 +1,4 @@
+const http = require('http')
 const Telegraf = require('telegraf')
 
 const getHolidayList = require('./utils/get-holiday-list')
@@ -60,3 +61,5 @@ bot.hears(/\/date \d+ \d+/, ctx => {
 
 bot.startPolling()
 bot.launch()
+
+http.createServer().listen(port)
