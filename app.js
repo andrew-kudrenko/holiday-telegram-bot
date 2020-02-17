@@ -19,7 +19,14 @@ bot.catch((err, ctx) => {
 })
 
 bot.start(ctx => {
-  const greetingMsg = 'Привет! Благодаря мне ты всегда будешь в курсе всех прздничных событий =)'
+  const commands = [
+    '/today - Узнать, какой сегодня праздник',
+    '/tomorrow - Узнать, какой праздник будет завтра',
+    '/date [день] [название или порядковый номер месяца] - Узнать, какой праздник будет в нужный день',
+    '[день] [название или порядковый номер месяца] - то же, что и предыдущая команда'
+  ]
+  const greetingMsg = 
+    `Привет! Благодаря мне ты всегда будешь в курсе всех прздничных событий =) Мой список команд:\n•${commands.join('\n•')}`
   ctx.reply(greetingMsg)
 })
 
@@ -40,20 +47,20 @@ bot.command('tomorrow', ctx => {
   getHolidayList(+month + 1, day, ctx)
 })
 
-bot.hears(/\/date \d+ \D+/, ctx => {
+bot.hears(/\/date\s+\d+\s+\D+/, ctx => {
   const [, day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
   getHolidayList(+month + 1, +day, ctx)
 })
 
-bot.hears(/\d \D+/, ctx => {
+bot.hears(/\d\s+\D+/, ctx => {
   const [day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
   getHolidayList(+month + 1, +day, ctx)
 })
 
-bot.hears(/\/date \d+/, ctx => {
+bot.hears(/\/date\s+\d+/, ctx => {
   const [day, month] = ctx.match
 
   getHolidayList(+month, +day, ctx)
