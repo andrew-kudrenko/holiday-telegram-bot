@@ -40,14 +40,14 @@ bot.command('tomorrow', ctx => {
   getHolidayList(+month + 1, day, ctx)
 })
 
-bot.hears(/\/date \d+ \w+/, ctx => {
+bot.hears(/\/date \d+ \D+/, ctx => {
   const [, day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
   getHolidayList(+month + 1, +day, ctx)
 })
 
-bot.hears(/\d \w+/, ctx => {
+bot.hears(/\d \D+/, ctx => {
   const [day, monthName] = ctx.match[0].split(' ')
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
   getHolidayList(+month + 1, +day, ctx)
