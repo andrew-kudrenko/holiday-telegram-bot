@@ -56,13 +56,13 @@ bot.hears(/\d \D+/, ctx => {
 bot.hears(/\/date \d+/, ctx => {
   const [day, month] = ctx.match
 
-  getHolidayList(+day, +month, ctx)
+  getHolidayList(+month, +day, ctx)
 })
 
 bot.hears(/\d+\s+\d+/, ctx => {
   const [day, month] = ctx.match[0].split(' ')
 
-  getHolidayList(+day, +month, ctx)
+  getHolidayList(+month, +day, ctx)
 })
 
 bot.startPolling()
