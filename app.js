@@ -17,7 +17,7 @@ bot.start(ctx => {
   ctx.reply(greetingMsg)
 })
 
-bot.command(/\/today/, ctx => {
+bot.command('/today', ctx => {
   const date = new Date()
   const month = date.getMonth()
   const day = date.getDate()
@@ -26,7 +26,7 @@ bot.command(/\/today/, ctx => {
 })
 
 
-bot.command(/\/tomorrow/, ctx => {
+bot.command('/tomorrow', ctx => {
   const date = new Date()
   const month = date.getMonth()
   const day = date.getDate() + 1
