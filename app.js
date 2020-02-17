@@ -12,6 +12,11 @@ const monthOrder = [
   'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'
 ]
 
+bot.catch((err, ctx) => {
+  console.log(`Error: ${err}`)
+  ctx.reply('Error...')
+})
+
 bot.start(ctx => {
   const greetingMsg = 'Привет! Благодаря мне ты всегда будешь в курсе всех прздничных событий =)'
   ctx.reply(greetingMsg)
@@ -35,22 +40,17 @@ bot.command('/tomorrow', ctx => {
 })
 
 bot.hears(/\/date \d+ .+/, ctx => {
-  const [, day, monthName] = ctx.message.split(' ')
+  const [, day, monthName] = ctx.match[0].split(' ')
 
   const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
 
   getHolidayList(month + 1, +day, ctx)
 })
 
-bot.on('text', ctx => {
-  const match = /\d .+/.match(ctx.message)
-  if (match) {
-    const [day, monthName] = match.split(' ')
-    const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
-    getHolidayList(month + 1, +day, ctx)
-  } else {
-    ctx.reply('Неизвестная команда')
-  }
+bot.hears(/\d .+/, ctx => {
+  const [day, monthName] = ctx.match[0].split(' ')
+  const month = monthOrder.findIndex(m => m.trim().toLowerCase() == monthName.trim().toLowerCase())
+  getHolidayList(month + 1, +day, ctx)
 })
 
 bot.hears(/\/date \d+ \d+/, ctx => {
@@ -59,4 +59,4 @@ bot.hears(/\/date \d+ \d+/, ctx => {
   getHolidayList(+day, +month, ctx)
 })
 
-bot.startPolling()
+bot.launch()
