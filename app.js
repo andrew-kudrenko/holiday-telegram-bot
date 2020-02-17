@@ -6,7 +6,7 @@ const http = require('http')
 
 const port = process.env.PORT || 3000
 const token = process.env.TOKEN
-const bot = new TelegramBot(token, { polling: true })
+const bot = new TelegramBot(token, { polling: true , request: { proxy: 'http://181.101.41.38:1080/' }})
 
 const monthOrder = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
