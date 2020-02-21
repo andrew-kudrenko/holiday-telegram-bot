@@ -72,7 +72,10 @@ bot.hears(/\d+\s+\d+/, ctx => {
   getHolidayList(+month, +day, ctx)
 })
 
-bot.startPolling()
 bot.launch()
 
-http.createServer().listen(port)
+http.createServer().listen(port, () => {
+  setInterval(() => {
+    console.log('Tick')
+  }, 60e3)
+})
