@@ -1,11 +1,9 @@
-const http = require('http')
 const Telegraf = require('telegraf')
 
 const getHolidayList = require('./utils/get-holiday-list')
 
 require('dotenv').config()
 
-const port = process.env.PORT || 5000
 const bot = new Telegraf(process.env.TOKEN)
 
 const monthOrder = [
@@ -73,9 +71,3 @@ bot.hears(/\d+\s+\d+/, ctx => {
 })
 
 bot.launch()
-
-http.createServer().listen(port, () => {
-  setInterval(() => {
-    console.log('Tick')
-  }, 60e3)
-})
