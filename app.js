@@ -1,3 +1,4 @@
+const http = require('http')
 const Telegraf = require('telegraf')
 
 const getHolidayList = require('./utils/get-holiday-list')
@@ -5,6 +6,8 @@ const getHolidayList = require('./utils/get-holiday-list')
 require('dotenv').config()
 
 const bot = new Telegraf(process.env.TOKEN)
+
+const port = process.env.PORT || 5000
 
 const monthOrder = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
@@ -71,3 +74,5 @@ bot.hears(/\d+\s+\d+/, ctx => {
 })
 
 bot.launch()
+
+http.createServer().listen(port)
