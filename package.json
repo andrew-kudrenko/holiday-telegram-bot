@@ -7,7 +7,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "pm2 start app",
+    "start": "node app",
     "serve": "nodemon app"
   },
   "author": "",
