@@ -26,7 +26,7 @@ bot.start(ctx => {
     '/date [день] [название или порядковый номер месяца] - \nУзнать, какой праздник будет в нужный день',
     '[день] [название или порядковый номер месяца] - то же, что и предыдущая команда'
   ]
-  const greetingMsg = 
+  const greetingMsg =
     `Привет! Благодаря мне ты всегда будешь в курсе всех прздничных событий =) Мой список команд:\n\n${commands.join('\n\n')}`
   ctx.reply(greetingMsg)
 })
@@ -75,4 +75,17 @@ bot.hears(/\d+\s+\d+/, ctx => {
 
 bot.launch()
 
-http.createServer().listen(port)
+http.createServer().listen(port, () => {
+  let hour = 6
+  const sendingTime = hour * 3600 * 1000
+
+  setTimeout(() => {
+    setInterval(() => {
+      const date = new Date()
+      const month = date.getMonth()
+      const day = date.getDate()
+
+      getHolidayList(+month + 1, day, ctx)
+    }, 86400 * 1000)
+  }, new Date().getMilliseconds() - sendingTime)
+})
