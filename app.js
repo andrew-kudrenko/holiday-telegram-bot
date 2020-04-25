@@ -1,6 +1,7 @@
-const http = require('http')
+const express = require('express')
 const Telegraf = require('telegraf')
 const axios = require('axios')
+const app = express()
 
 const getHolidayList = require('./utils/get-holiday-list')
 
@@ -76,10 +77,15 @@ bot.hears(/\d+\s+\d+/, ctx => {
 
 bot.launch()
 
-http.createServer().listen(port)
+app.get('*', (_, res) => {
+  res.send('Response')
+})
 
-setInterval(() => {
-  fetch('https://holiday-telegram-bot.herokuapp.com/')
-    .then(console.log)
-    .catch(console.log)
-}, 60e3 * 5)
+app.listen(port, () => {
+  console.log(`Server has been started on port ${port}`)
+  setInterval(() => {
+    fetch('https://holiday-telegram-bot.herokuapp.com/')
+      .then(console.log)
+      .catch(console.log)
+  }, 60e3 * 5)
+})
