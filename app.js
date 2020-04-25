@@ -1,5 +1,6 @@
 const http = require('http')
 const Telegraf = require('telegraf')
+const axios = require('axios')
 
 const getHolidayList = require('./utils/get-holiday-list')
 
@@ -75,17 +76,10 @@ bot.hears(/\d+\s+\d+/, ctx => {
 
 bot.launch()
 
-http.createServer().listen(port, () => {
-  let hour = 6
-  const sendingTime = hour * 3600 * 1000
+http.createServer().listen(port)
 
-  setTimeout(() => {
-    setInterval(() => {
-      const date = new Date()
-      const month = date.getMonth()
-      const day = date.getDate()
-
-      getHolidayList(+month + 1, day, ctx)
-    }, 86400 * 1000)
-  }, new Date().getMilliseconds() - sendingTime)
-})
+setInterval(() => {
+  fetch('https://holiday-telegram-bot.herokuapp.com/')
+    .then(console.log)
+    .catch(console.log)
+}, 60e3 * 5)
