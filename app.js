@@ -78,14 +78,13 @@ bot.hears(/\d+\s+\d+/, ctx => {
 bot.launch()
 
 app.get('*', (_, res) => {
-  res.send('Response')
+  res.end(200)
 })
 
 app.listen(port, () => {
   console.log(`Server has been started on port ${port}`)
   setInterval(() => {
     fetch('https://holiday-telegram-bot.herokuapp.com/')
-      .then(console.log)
       .catch(console.log)
-  }, 60e3 * 5)
+  }, 30e3)
 })
