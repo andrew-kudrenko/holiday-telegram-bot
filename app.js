@@ -86,5 +86,5 @@ app.listen(port, () => {
   setInterval(() => {
     fetch('https://holiday-telegram-bot.herokuapp.com/')
       .catch(console.log)
-  }, 30e3)
+  }, 60e3 * 10)
 })
